@@ -1,5 +1,12 @@
 [
   {
+    'id': '9677861',
+    'name': '036Kebab',
+    'url': 'https://hh.ru/employer/9677861',
+    'vacancies_url': 'https://api.hh.ru/vacancies?employer_id=9677861',
+    'open_vacancies': 1
+  },
+  {
     'id': '4429980',
     'name': '0901',
     'url': 'https://hh.ru/employer/4429980',
@@ -18,7 +25,7 @@
     'name': '1000 ДЛЯ УДОБНОЙ ЖИЗНИ',
     'url': 'https://hh.ru/employer/3857386',
     'vacancies_url': 'https://api.hh.ru/vacancies?employer_id=3857386',
-    'open_vacancies': 11
+    'open_vacancies': 12
   },
   {
     'id': '54794',
@@ -32,21 +39,21 @@
     'name': '1000 и одна туфелька',
     'url': 'https://hh.ru/employer/1327757',
     'vacancies_url': 'https://api.hh.ru/vacancies?employer_id=1327757',
-    'open_vacancies': 11
+    'open_vacancies': 12
   },
   {
-    'id': '5647780',
-    'name': '1000 КВАДРАТОВ',
-    'url': 'https://hh.ru/employer/5647780',
-    'vacancies_url': 'https://api.hh.ru/vacancies?employer_id=5647780',
-    'open_vacancies': 1
+    'id': '735232',
+    'name': '1000 КАДРОВ',
+    'url': 'https://hh.ru/employer/735232',
+    'vacancies_url': 'https://api.hh.ru/vacancies?employer_id=735232',
+    'open_vacancies': 2
   },
   {
     'id': '2119514',
     'name': '1000 мелочей (ИП Гафиатуллина Гульшат Митарисовна)',
     'url': 'https://hh.ru/employer/2119514',
     'vacancies_url': 'https://api.hh.ru/vacancies?employer_id=2119514',
-    'open_vacancies': 3
+    'open_vacancies': 1
   },
   {
     'id': '9934264',
@@ -60,13 +67,6 @@
     'name': '1000 складов',
     'url': 'https://hh.ru/employer/1040955',
     'vacancies_url': 'https://api.hh.ru/vacancies?employer_id=1040955',
-    'open_vacancies': 1
-  },
-  {
-    'id': '5066511',
-    'name': '1001pled.ru',
-    'url': 'https://hh.ru/employer/5066511',
-    'vacancies_url': 'https://api.hh.ru/vacancies?employer_id=5066511',
     'open_vacancies': 1
   }
 ]
