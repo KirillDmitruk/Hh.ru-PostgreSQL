@@ -20,7 +20,7 @@
 * get_vacancies_with_keyword - получение списка всех вакансий, в названии которых содержатся переданные в метод слова.
 
 Получение информации по API:
-* [HH_API](https://github.com/KirillDmitruk/Hh.ru-PostgreSQL/blob/main/src/Hh_API.py)
+* [Hh_API.py](https://github.com/KirillDmitruk/Hh.ru-PostgreSQL/blob/main/src/Hh_API.py)
 * class AbstractAPI - абстрактный класс с методом получения данных по API.
 * class HeadHunterData - класс получения данных по API.
 * get_employers - получение данных по определенным параметрам с сайта HH.ru.
