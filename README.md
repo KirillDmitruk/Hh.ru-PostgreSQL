@@ -7,7 +7,7 @@
 
 ### **src**
 Работа с БД:
-* [DBmanager.py](https://github.com/KirillDmitruk/Hh.ru-PostgreSQL/blob/main/src/Dbmanager.py)
+* [Dbmanager.py](https://github.com/KirillDmitruk/Hh.ru-PostgreSQL/blob/main/src/Dbmanager.py)
 * create_connection - создание соединения с БД
 * close_connection - закрытие соединения с БД.
 * create_database - создание БД.
