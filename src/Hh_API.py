@@ -20,7 +20,6 @@ class HeadHunterData(AbstractAPI):
     def __init__(self):
         self.employers = []
         self.all_vacancies = []
-        # self.companies = ['ITFB Group', 'Caltat', 'ООО Гексагон', 'ООО Экспомобилити', 'Яндекс']
         self.sort_emp = []
         self.sort_vac = []
 
@@ -85,13 +84,14 @@ class HeadHunterData(AbstractAPI):
             id_emp = f'{vac["id"]}'
             name = f'{vac["name"]}'
             area = f'{vac["area"]["name"]}'
-            # currency = f'{vac["salary"]["currency"]}'
+
             employer_id = f'{vac["employer"]["id"]}'
             employer_name = f'{vac["employer"]["name"]}'
             emp_url = f'{vac["employer"]["alternate_url"]}'
             vac_url = f'{vac["alternate_url"]}'
 
             if vac["salary"] is not None:
+                currency = f'{vac["salary"]["currency"]}'
                 if vac["salary"]["from"] is not None:
 
                     salary_from = vac["salary"]["from"]
@@ -105,6 +105,7 @@ class HeadHunterData(AbstractAPI):
                     salary_to = 0
             else:
                 salary_from, salary_to = 0, 0
+                currency = 'RUR'
 
             vac_dict = {
                 'id': id_emp,
@@ -112,7 +113,7 @@ class HeadHunterData(AbstractAPI):
                 'area': area,
                 'salary_from': salary_from,
                 'salary_to': salary_to,
-                # 'currency': currency,
+                'currency': currency,
                 'employer_id': employer_id,
                 'employer_name': employer_name,
                 'employer_url': emp_url,
@@ -126,6 +127,6 @@ class HeadHunterData(AbstractAPI):
 if __name__ == '__main__':
     x = HeadHunterData()
     x.get_employers()
-    print(x.get_sort_emp())
+    x.get_sort_emp()
     x.get_vacancies_from_employer()
-    # print(x.get_sort_vacancies())
+    print(x.get_sort_vacancies())
