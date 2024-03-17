@@ -1,22 +1,19 @@
-import json
-import time
 from abc import ABC, abstractmethod
+
 import requests
 
 
 class AbstractAPI(ABC):
-    """
-    Абстрактный класс с методом получения данных по API
-    """
+    """Абстрактный класс с методом получения данных по API."""
+
     @abstractmethod
     def get_employers(self):
         pass
 
 
 class HeadHunterData(AbstractAPI):
-    """
-    Класс получения данных по API
-    """
+    """Класс получения данных по API"""
+
     def __init__(self):
         self.employers = []
         self.all_vacancies = []
@@ -28,7 +25,6 @@ class HeadHunterData(AbstractAPI):
         Метод позволяет получить данные по определенным параметрам с сайта HH.ru
         :return: self.employers
         """
-
         params = {
             'area': 113,
             'only_with_vacancies': True,
@@ -64,7 +60,7 @@ class HeadHunterData(AbstractAPI):
     def get_vacancies_from_employer(self):
         """
         Метод позволяет получить данные по определенным параметрам с сайта HH.ru
-        :return:
+        :return: self.all_vacancies
         """
         for emp in self.sort_emp:
             hh_url = f'{emp["vacancies_url"]}'
@@ -77,7 +73,7 @@ class HeadHunterData(AbstractAPI):
     def get_sort_vacancies(self):
         """
         Метод получения отсортированного списка
-        :return:
+        :return: self.sort_vac
         """
         for vac in self.all_vacancies:
 
@@ -121,12 +117,5 @@ class HeadHunterData(AbstractAPI):
             }
 
             self.sort_vac.append(vac_dict)
+
         return self.sort_vac
-
-
-if __name__ == '__main__':
-    x = HeadHunterData()
-    x.get_employers()
-    x.get_sort_emp()
-    x.get_vacancies_from_employer()
-    print(x.get_sort_vacancies())

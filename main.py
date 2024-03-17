@@ -14,7 +14,7 @@ def main():
         params = config()
         dbmanager = DBManager(params)
         dbmanager.create_connection('postgres')
-        dbmanager.create_database('k')
+        dbmanager.create_database('HeadHunter')
 
         dbmanager.create_tables()
         dbmanager.insert_data(hh_data.get_sort_vacancies(), hh_data.get_sort_emp())
@@ -22,7 +22,6 @@ def main():
         all_vac = dbmanager.get_all_vacancies()
         avg_salary = dbmanager.get_avg_salary()
         higher_salary = dbmanager.get_vacancies_with_higher_salary()
-        dbmanager.get_vacancies_with_keyword('продавец')
 
         print('Привет! Для дальнейшей работы выберите одно из действий:\n'
               '1. Получить список всех компаний и количество вакансий.\n'

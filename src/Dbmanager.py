@@ -1,27 +1,41 @@
 import psycopg2
 
-from config import config
-from src.Hh_API import HeadHunterData
-
 
 class DBManager:
+    """Класс для работы с БД."""
 
     def __init__(self, params):
         self.params = params
 
     def create_connection(self, db_name: str):
-        """Создаем соединение с БД."""
+        """
+        Создание соединения с БД.
+        :param db_name: db_name
+        :return: 'Соединение создано.'
+        """
         self.conn = psycopg2.connect(dbname=db_name, **self.params)
         self.conn.autocommit = True
         self.cur = self.conn.cursor()
 
+        return 'Соединение создано.'
+
     def close_connection(self):
-        """Закрытие соединения с БД."""
+        """
+        Закрытие соединения с БД.
+        :return: 'Соединение закрыто.'
+        """
         self.cur.close()
         self.conn.close()
 
+        return 'Соединение закрыто.'
+
     def create_database(self, db_name: str):
-        """Создание БД."""
+        """
+        Создание БД.
+        :param db_name: db_name
+        :return: 'База данных создана.'
+        """
+
         try:
             self.cur.execute(f"CREATE DATABASE {db_name}")
         except psycopg2.errors.DuplicateDatabase:
@@ -31,7 +45,11 @@ class DBManager:
         return 'База данных создана.'
 
     def create_tables(self):
-        """Создание таблиц."""
+        """
+        Создание таблиц.
+        :return: 'Таблицы созданы.'
+        """
+
         try:
             self.cur.execute("""
                 CREATE TABLE vacancies 
@@ -89,7 +107,12 @@ class DBManager:
         return 'Таблицы созданы.'
 
     def insert_data(self, vac_data, emp_data):
-        """Заполнение БД данными."""
+        """
+        Заполнение таблиц данными.
+        :param vac_data: hh_data.get_sort_vacancies()
+        :param emp_data: hh_data.get_sort_emp()
+        :return: 'Таблицы заполнены данными.'
+        """
 
         for vac in vac_data:
             self.cur.execute("""
@@ -110,8 +133,14 @@ class DBManager:
                              (emp['id'], emp['name'], emp['url'], emp['open_vacancies'])
                              )
 
+        return 'Таблицы заполнены данными.'
+
     def get_companies_and_vacancies_count(self):
-        """Получает список всех компаний и количество вакансий у каждой компании."""
+        """
+        Получает список всех компаний и количество вакансий у каждой компании.
+        :return: companies
+        """
+
         self.cur.execute("""
             SELECT employer_name, open_vacancies FROM employers
             ORDER BY open_vacancies DESC
@@ -121,8 +150,12 @@ class DBManager:
         return companies
 
     def get_all_vacancies(self):
-        """Получает список всех вакансий с указанием названия компании,
-           названия вакансии, зарплаты и ссылки на вакансию."""
+        """
+        Получает список всех вакансий с указанием названия компании,
+        названия вакансии, зарплаты и ссылки на вакансию.
+        :return: vacancies
+        """
+
         self.cur.execute("""
             SELECT  employer_name, vacancy_name, salary_from, salary_to, vacancy_url FROM vacancies
             ORDER BY salary_from DESC
@@ -132,7 +165,10 @@ class DBManager:
         return vacancies
 
     def get_avg_salary(self):
-        """Получает среднюю зарплату по вакансиям."""
+        """
+        Получает среднюю зарплату по вакансиям.
+        :return: avg_salary
+        """
 
         self.cur.execute("""
             SELECT salary_from, salary_to FROM vacancies
@@ -151,10 +187,16 @@ class DBManager:
             else:
                 continue
 
-        return round(sum(self.salaries_list) / len(self.salaries_list), 2)
+        avg_salary = round(sum(self.salaries_list) / len(self.salaries_list), 2)
+
+        return avg_salary
 
     def get_vacancies_with_higher_salary(self):
-        """Получает список всех вакансий, у которых зарплата выше средней по всем вакансиям."""
+        """
+        Получает список всех вакансий, у которых зарплата выше средней по всем вакансиям.
+        :return: sort_vacancies_list
+        """
+
         all_vacancies = self.get_all_vacancies()
         avg_salary = self.get_avg_salary()
         sort_vacancies_list = []
@@ -173,7 +215,13 @@ class DBManager:
         return sort_vacancies_list
 
     def get_vacancies_with_keyword(self, keyword):
-        """Получает список всех вакансий, в названии которых содержатся переданные в метод слова."""
+        """
+        Получает список всех вакансий,
+        в названии которых содержатся переданные в метод слова.
+        :param keyword: keyword
+        :return: sorted_vac_list
+        """
+
         vacancies_list = self.get_all_vacancies()
         sorted_vac_list = []
 
@@ -182,24 +230,3 @@ class DBManager:
                 sorted_vac_list.append(vac)
 
         return sorted_vac_list
-
-
-if __name__ == '__main__':
-    hh_data = HeadHunterData()
-    hh_data.get_employers()
-    hh_data.get_sort_emp()
-    hh_data.get_vacancies_from_employer()
-    hh_data.get_sort_vacancies()
-
-    params = config()
-    dbmanager = DBManager(params)
-    dbmanager.create_connection('postgres')
-    dbmanager.create_database('k')
-
-    dbmanager.create_tables()
-    dbmanager.insert_data(hh_data.get_sort_vacancies(), hh_data.get_sort_emp())
-    # print(dbmanager.get_companies_and_vacancies_count())
-    # print(dbmanager.get_all_vacancies())
-    # dbmanager.get_avg_salary()
-    # print(dbmanager.get_vacancies_with_higher_salary())
-    print(dbmanager.get_vacancies_with_keyword('Агент'))
